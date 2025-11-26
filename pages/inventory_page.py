@@ -12,11 +12,18 @@ class InventoryPage(BasePage):
 
     def add_item_to_cart(self, item_name: str):
         # item_name example: "Sauce Labs Backpack"
-        locator = (By.XPATH, f"//div[text()='{item_name}']/ancestor::div[@class='inventory_item']//button")
+        # Use the inventory_item_name element to locate the product reliably,
+        # then click the button in its container.
+        locator = (
+            By.XPATH,
+            f"//div[@class='inventory_item']//div[@class='inventory_item_name' and normalize-space(text())='{item_name}']/ancestor::div[@class='inventory_item']//button"
+        )
         self.click(locator)
 
     def go_to_cart(self):
-        self.click(self.CART_BUTTON)
+        # Click the cart link element for reliable navigation
+        cart_link = (By.CLASS_NAME, "shopping_cart_link")
+        self.click(cart_link)
 
     def get_cart_count(self) -> int:
         if self.is_visible(self.CART_BADGE):
