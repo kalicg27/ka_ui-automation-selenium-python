@@ -15,9 +15,9 @@ def get_webdriver(config: Config):
     if browser == "chrome":
         options = ChromeOptions()
         if config.headless:
-            # Headless mode for CI
             options.add_argument("--headless=new")
-        # These flags help Chrome run reliably in GitHub Actions
+
+        # Extra flags for CI stability
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
 
@@ -36,4 +36,6 @@ def get_webdriver(config: Config):
         raise ValueError(f"Unsupported browser: {browser}")
 
     driver.maximize_window()
-    driver.implicitly_wait(config.implici_
+    driver.implicitly_wait(config.implicit_wait)
+    driver.set_page_load_timeout(config.page_load_timeout)
+    return driver
