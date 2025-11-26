@@ -1,6 +1,6 @@
 import pytest
 from core.config_loader import Config
-from core.driver_factory.py import get_webdriver
+from core.driver_factory import get_webdriver
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
